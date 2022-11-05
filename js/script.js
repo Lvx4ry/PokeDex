@@ -1,7 +1,24 @@
+/* CONTRASEÑA? */
 let savedPass = 1234;
-let inicialFuego = "Charmander, Tipo: Fuego \n";
-let inicialAgua = "Squirtle, Tipo: Agua \n";
-let inicialPlanta = "Bulbasaur, Tipo: Planta \n";
+
+/* CONSTRUCTOR Y DECLARACION DE POKES */
+
+class Pokemon {
+  constructor(nombre, tipo, numero, region) {
+    this.nombre = nombre;
+    this.tipo = tipo;
+    this.numero = parseInt(numero);
+    this.region = region;
+  }
+}
+
+iniciales = [
+  new Pokemon("Charmander", "Fuego", "4", "Kanto"),
+  new Pokemon("Squirtle", "Agua", "7", "Kanto"),
+  new Pokemon("Bulbasaur", "Planta", "1", "Kanto"),
+];
+
+/* LOGIN SIMPLE */
 
 function login() {
   let logged = false;
@@ -21,83 +38,35 @@ function login() {
 
 if (login()) {
   let userChoice = prompt(
-    "Elegí una opción: \n1 - Elegir un Inicial. \n2 - Ver mis Pokémon. \n3 - Entrenar mi Pokémon \n4 - Salir"
+    "Elegí una opción: \n1 - Ver Iniciales. \n2 - Ordernar por Numero. \n3 - Filtrar por tipo \n4 - Salir"
   );
-  let userPokemon;
-  let pokemonLvl;
+
   while (userChoice != "4") {
     switch (userChoice) {
       case "1":
-        let selectedPoke = prompt(
-          "Elegí uno, los iniciales disponibles son: \n" +
-            "1 -" +
-            inicialFuego +
-            "2 -" +
-            inicialAgua +
-            "3 -" +
-            inicialPlanta
-        );
-        while (
-          selectedPoke != "1" &&
-          selectedPoke != "2" &&
-          selectedPoke != "3"
-        ) {
-          selectedPoke = prompt(
-            "Elegí uno, los iniciales disponibles son: \n" +
-              "1 -" +
-              inicialFuego +
-              "2 -" +
-              inicialAgua +
-              "3 -" +
-              inicialPlanta
-          );
-        }
-        switch (selectedPoke) {
-          case "1":
-            userPokemon = inicialFuego;
-            pokemonLvl = 1;
-            alert("Elegiste a " + inicialFuego);
-            break;
+        alert(`Los iniciales disponibles son: \n ${crearString(iniciales)}`);
 
-          case "2":
-            userPokemon = inicialAgua;
-            pokemonLvl = 1;
-            alert("Elegiste a " + inicialAgua);
-            break;
-
-          case "3":
-            userPokemon = inicialPlanta;
-            pokemonLvl = 1;
-            alert("Elegiste a " + inicialPlanta);
-            break;
-
-          default:
-            alert("Elegiste una opción inválida");
-            break;
-        }
         break;
       case "2":
-        if (
-          userPokemon == inicialAgua ||
-          userPokemon == inicialFuego ||
-          userPokemon == inicialPlanta
-        ) {
-          alert(
-            "Tu pokémon es: \n" + userPokemon + "y es nivel: " + pokemonLvl
-          );
-        } else {
-          alert("No tienes ningún Pokémon, elige uno");
-        }
+        alert(
+          crearString(iniciales.slice(0).sort((a, b) => a.numero - b.numero))
+        );
         break;
       case "3":
-        if (isNaN(pokemonLvl)) {
-          alert("No tienes ningún Pokémon, elige uno");
-        } else if (pokemonLvl == 99) {
-          alert("No puedes subir más de nivel a este Pokémon");
+        let userTypeChoice = prompt(
+          "Elegí entre Fuego, Agua o Planta"
+        ).toUpperCase();
+        let filtrado = crearString(
+          iniciales
+            .slice(0)
+            .filter((element) => element.tipo.toUpperCase() == userTypeChoice)
+        );
+        if (filtrado == "") {
+          alert("No hay iniciales con ese tipo");
         } else {
-          pokemonLvl++;
-          alert("Tu Pokémon subió 1 Nivel! Ahora es Nivel: " + pokemonLvl);
+          alert(filtrado);
         }
+
         break;
 
       default:
@@ -105,7 +74,7 @@ if (login()) {
         break;
     }
     userChoice = prompt(
-      "Elegí una opción: \n1 - Ver Iniciales. \n2 - Ver mis Pokémon. \n3 - Entrenar mi Pokémon \n4 - Salir"
+      "Elegí una opción: \n1 - Ver Iniciales. \n2 - Ordernar por Numero. \n3 - Filtrar por tipo \n4 - Salir"
     );
   }
 } else {
@@ -113,3 +82,11 @@ if (login()) {
 }
 
 alert("Hasta luego");
+
+function crearString(array) {
+  string = "";
+  array.forEach((element) => {
+    string += `Nombre: ${element.nombre}\n Tipo: ${element.tipo}\n Numero: ${element.numero}\n Region: ${element.region} \n\n`;
+  });
+  return string;
+}
