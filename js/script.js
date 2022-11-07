@@ -13,9 +13,9 @@ class Pokemon {
 }
 
 iniciales = [
-  new Pokemon("Charmander", "Fuego", "4", "Kanto"),
-  new Pokemon("Squirtle", "Agua", "7", "Kanto"),
-  new Pokemon("Bulbasaur", "Planta", "1", "Kanto"),
+  new Pokemon("Charmander", "Fuego", "4"),
+  new Pokemon("Squirtle", "Agua", "7"),
+  new Pokemon("Bulbasaur", "Planta", "1"),
 ];
 
 /* LOGIN SIMPLE */
@@ -41,17 +41,21 @@ if (login()) {
     "Elegí una opción: \n1 - Ver Iniciales. \n2 - Ordernar por Numero. \n3 - Filtrar por tipo \n4 - Salir"
   );
 
+  /* MENU DE OPCIONES */
+
   while (userChoice != "4") {
     switch (userChoice) {
       case "1":
         alert(`Los iniciales disponibles son: \n ${crearString(iniciales)}`);
 
         break;
+
       case "2":
         alert(
           crearString(iniciales.slice(0).sort((a, b) => a.numero - b.numero))
         );
         break;
+
       case "3":
         let userTypeChoice = prompt(
           "Elegí entre Fuego, Agua o Planta"
@@ -82,6 +86,8 @@ if (login()) {
 }
 
 alert("Hasta luego");
+
+/* FUNC PARA CONVERTIR OBJETOS EN ARRAYS */
 
 function crearString(array) {
   string = "";
