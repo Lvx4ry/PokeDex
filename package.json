@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "node-sass": "^8.0.0",
+    "nodemon": "^2.0.20"
+  },
+  "name": "pokedex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lvx4ry/PokeDex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lvx4ry/PokeDex/issues"
+  },
+  "homepage": "https://github.com/Lvx4ry/PokeDex#readme",
+  "description": ""
+}
