@@ -1,0 +1,33 @@
+/* COLORES PRINCIPALES */
+
+body {
+  background-color: map-get($colors, darkMainColor);
+}
+
+footer {
+  background-color: map-get($colors, darkSecColor);
+}
+
+.navbar {
+  background-color: map-get($colors, darkSecColor) !important;
+}
+
+/* TEXTOS */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+strong,
+.whiteTxt {
+  color: map-get($colors, whiteColor) !important;
+}
+
+/* CLASES ESPECIFICAS */
+
+.redBgColor {
+  background-color: map-get($colors, redColor);
+}

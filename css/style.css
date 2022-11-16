@@ -1,0 +1,34 @@
+/* COLORES PRINCIPALES */
+body {
+  background-color: #181818; }
+
+footer {
+  background-color: #343434; }
+
+.navbar {
+  background-color: #343434 !important; }
+
+/* TEXTOS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+strong,
+.whiteTxt {
+  color: #ffffff !important; }
+
+/* CLASES ESPECIFICAS */
+.redBgColor {
+  background-color: #8b0000; }
+
+/* ARREGLO FOOTER SIEMPRE AL FINAL DE LA PAGINA */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; }
+
+footer {
+  margin-top: auto; }
