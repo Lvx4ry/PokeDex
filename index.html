@@ -45,6 +45,7 @@
         </div>
       </nav>
     </header>
+
     <main>
       <div class="container d-flex flex-column align-items-center">
         <div class="row col-8 my-5 d-flex flex-column align-items-center">
@@ -54,6 +55,8 @@
             everything about its stats!
           </p>
         </div>
+
+        <!-- SEARCH BAR -->
         <div class="row col-6">
           <div class="input-group">
             <input
@@ -61,13 +64,13 @@
               class="form-control"
               placeholder="Search"
               aria-label="Search"
-              aria-describedby="button-addon2"
+              aria-describedby="search-bar"
             />
 
             <button
               class="btn btn-outline-light"
               type="button"
-              id="button-addon2"
+              id="search-button"
             >
               <i class="bi bi-search">
                 <svg
@@ -86,11 +89,13 @@
             </button>
           </div>
         </div>
+
+        <!-- BOTONES DE RANDOM Y BUSQUEDA AVANZADA -->
         <div class="row col-6 d-flex flex-row justify-content-evenly my-3">
           <button
             class="btn btn-outline-light col-5 redBgColor"
             type="button"
-            id="button-addon2"
+            id="random-button"
           >
             <i class="bi bi-shuffle">
               <svg
@@ -116,10 +121,86 @@
             class="btn btn-primary btn-outline-light col-5"
             type="button"
             value="Advanced Search!"
+            id="advanced-button"
           />
         </div>
       </div>
+
+      <!-- FILTRADO DE OPCIONES AVANZADAS -->
+      <div class="container-fluid">
+        <div
+          class="row advOptionsContainer d-flex flex-row justify-content-center hidden"
+        >
+          <div class="col-4 py-3">
+            <p class="fs-5">Type Selector</p>
+            <select
+              class="form-select form-select-sm"
+              aria-label=".form-select-sm example"
+              id="type-selector"
+            >
+              <option selected>Every</option>
+              <option value="1">Fire</option>
+              <option value="2">Water</option>
+              <option value="3">Grass</option>
+              <option value="4">Dragon</option>
+              <option value="5">Bug</option>
+              <option value="6">Fairy</option>
+              <option value="7">Ghost</option>
+              <option value="8">Rock</option>
+              <option value="9">Ground</option>
+              <option value="10">Normal</option>
+              <option value="11">Psychic</option>
+              <option value="12">Steel</option>
+              <option value="13">Electric</option>
+              <option value="14">Fighting</option>
+              <option value="15">Flying</option>
+              <option value="16">Ice</option>
+              <option value="17">Poison</option>
+              <option value="18">Dark</option>
+            </select>
+          </div>
+          <div class="col-4 py-3">
+            <p class="fs-5">Filter By</p>
+            <select
+              class="form-select form-select-sm"
+              aria-label=".form-select-sm example"
+              id="filter-selector"
+            >
+              <option selected>Number (lower to higher)</option>
+              <option value="1">Number (higher to lower)</option>
+              <option value="2">A-Z</option>
+              <option value="3">Z-A</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- CARDS CONTAINER -->
+      <div class="container">
+        <div
+          class="row py-5 d-flex flex-row justify-content-evenly"
+          id="cards-container"
+        >
+          <div
+            class="card col-2 border-light DarkSecColor m-2 placeholder-glow"
+          >
+            <img
+              src="assets/pokeball-img.png"
+              alt=""
+              class="card-img-top border-bottom border-1 p-2"
+            />
+            <span
+              class="card-subtitle text-muted whiteTxt mt-2 d-inline placeholder"
+              >#001</span
+            >
+            <div class="card-body">
+              <h5 class="card-title placeholder col-12">Bulbasaur</h5>
+              <p class="card-text placeholder col-12">Grass</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
+
     <footer>
       <div class="container">
         <div class="row py-3 d-flex justify-content-between align-items-center">

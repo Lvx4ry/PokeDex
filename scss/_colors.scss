@@ -31,3 +31,11 @@ strong,
 .redBgColor {
   background-color: map-get($colors, redColor);
 }
+
+.advOptionsContainer {
+  background-color: map-get($colors, orangeColor);
+}
+
+.DarkSecColor {
+  background-color: map-get($colors, darkSecColor);
+}

@@ -24,6 +24,12 @@ strong,
 .redBgColor {
   background-color: #8b0000; }
 
+.advOptionsContainer {
+  background-color: #ff5800; }
+
+.DarkSecColor {
+  background-color: #343434; }
+
 /* ARREGLO FOOTER SIEMPRE AL FINAL DE LA PAGINA */
 body {
   min-height: 100vh;
@@ -32,3 +38,13 @@ body {
 
 footer {
   margin-top: auto; }
+
+/* VISIBLE E INVISIBLE */
+.visible {
+  display: flex !important; }
+
+.hidden {
+  display: none !important; }
+
+* {
+  font-family: "Oswald", sans-serif; }
