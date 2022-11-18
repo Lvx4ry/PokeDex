@@ -34,7 +34,7 @@
             href="#"
           >
             <img
-              src="/assets/pokeball.svg"
+              src="/assets/img/pokeball.svg"
               alt=""
               width="30"
               height="24"
@@ -50,14 +50,14 @@
       <div class="container d-flex flex-column align-items-center">
         <div class="row col-8 my-5 d-flex flex-column align-items-center">
           <h1 class="text-center col-12">Welcome to my PokeDex!</h1>
-          <p class="fs-5 text-center my-2 col-8">
+          <p class="fs-5 text-center my-2 col-12">
             Here u will be able to find any pokemon you want and learn
             everything about its stats!
           </p>
         </div>
 
         <!-- SEARCH BAR -->
-        <div class="row col-6">
+        <div class="row col-10 col-lg-6">
           <div class="input-group">
             <input
               type="text"
@@ -93,7 +93,7 @@
         <!-- BOTONES DE RANDOM Y BUSQUEDA AVANZADA -->
         <div class="row col-6 d-flex flex-row justify-content-evenly my-3">
           <button
-            class="btn btn-outline-light col-5 redBgColor"
+            class="btn btn-outline-light col-10 col-lg-5 redBgColor my-1"
             type="button"
             id="random-button"
           >
@@ -117,12 +117,14 @@
             </i>
             Random!
           </button>
-          <input
-            class="btn btn-primary btn-outline-light col-5"
+
+          <button
+            class="btn btn-outline-light col-10 col-lg-5 btn-primary my-1"
             type="button"
-            value="Advanced Search!"
             id="advanced-button"
-          />
+          >
+            Advanced Search!
+          </button>
         </div>
       </div>
 
@@ -130,48 +132,58 @@
       <div class="container-fluid">
         <div
           class="row advOptionsContainer d-flex flex-row justify-content-center hidden"
+          id="advOptionsContainer"
         >
-          <div class="col-4 py-3">
+          <div class="col-10 col-lg-4 py-3">
             <p class="fs-5">Type Selector</p>
             <select
               class="form-select form-select-sm"
               aria-label=".form-select-sm example"
               id="type-selector"
             >
-              <option selected>Every</option>
-              <option value="1">Fire</option>
-              <option value="2">Water</option>
-              <option value="3">Grass</option>
-              <option value="4">Dragon</option>
-              <option value="5">Bug</option>
-              <option value="6">Fairy</option>
-              <option value="7">Ghost</option>
-              <option value="8">Rock</option>
-              <option value="9">Ground</option>
-              <option value="10">Normal</option>
-              <option value="11">Psychic</option>
-              <option value="12">Steel</option>
-              <option value="13">Electric</option>
-              <option value="14">Fighting</option>
-              <option value="15">Flying</option>
-              <option value="16">Ice</option>
-              <option value="17">Poison</option>
-              <option value="18">Dark</option>
+              <option selected value="Every">Every</option>
+              <option value="Fire">Fire</option>
+              <option value="Water">Water</option>
+              <option value="Grass">Grass</option>
+              <option value="Dragon">Dragon</option>
+              <option value="Bug">Bug</option>
+              <option value="Fairy">Fairy</option>
+              <option value="Ghost">Ghost</option>
+              <option value="Rock">Rock</option>
+              <option value="Ground">Ground</option>
+              <option value="Normal">Normal</option>
+              <option value="Psychic">Psychic</option>
+              <option value="Steel">Steel</option>
+              <option value="Electric">Electric</option>
+              <option value="Fighting">Fighting</option>
+              <option value="Flying">Flying</option>
+              <option value="Ice">Ice</option>
+              <option value="Poison">Poison</option>
+              <option value="Dark">Dark</option>
             </select>
           </div>
-          <div class="col-4 py-3">
+          <div class="col-10 col-lg-4 py-3">
             <p class="fs-5">Filter By</p>
             <select
               class="form-select form-select-sm"
               aria-label=".form-select-sm example"
               id="filter-selector"
             >
-              <option selected>Number (lower to higher)</option>
-              <option value="1">Number (higher to lower)</option>
-              <option value="2">A-Z</option>
-              <option value="3">Z-A</option>
+              <option selected value="numberLowToHigh">
+                Number (lower to higher)
+              </option>
+              <option value="numberHighToLow">Number (higher to lower)</option>
+              <option value="A-Z">A-Z</option>
+              <option value="Z-A">Z-A</option>
             </select>
           </div>
+          <button
+            class="btn btn-outline-light col-10 col-lg-5 my-1 mb-3 redBgColor"
+            type="button"
+            id="filter-button"
+          >
+            Filter Now!
+          </button>
         </div>
       </div>
       <!-- CARDS CONTAINER -->
@@ -181,10 +193,10 @@
           id="cards-container"
         >
           <div
-            class="card col-2 border-light DarkSecColor m-2 placeholder-glow"
+            class="card col-2 border-light darkSecColor m-2 placeholder-glow hidden"
           >
             <img
-              src="assets/pokeball-img.png"
+              src="assets/img/pokeball-img.png"
               alt=""
               class="card-img-top border-bottom border-1 p-2"
             />
@@ -208,14 +220,14 @@
             Pokedex powered by Facundo Leitón - 2022
           </p>
           <a href="https://github.com/Lvx4ry" class="col-2"
-            ><img src="assets/github.svg" alt="github logo"
+            ><img src="assets/img/github.svg" alt="github logo"
           /></a>
         </div>
       </div>
     </footer>
 
     <!-- Optional JavaScript; choose one of the two! -->
-    <!-- <script src="js/script.js"></script> -->
+    <script src="js/script.js"></script>
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script

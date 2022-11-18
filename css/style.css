@@ -24,10 +24,11 @@ strong,
 .redBgColor {
   background-color: #8b0000; }
 
-.advOptionsContainer {
+.advOptionsContainer,
+.orangeBgColor {
   background-color: #ff5800; }
 
-.DarkSecColor {
+.darkSecColor {
   background-color: #343434; }
 
 /* ARREGLO FOOTER SIEMPRE AL FINAL DE LA PAGINA */
