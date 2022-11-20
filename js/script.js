@@ -7,7 +7,7 @@ class Pokemon {
   constructor(nombre, tipo, numero, image) {
     this.nombre = nombre;
     this.tipo = tipo;
-    this.numero = parseInt(numero);
+    this.numero = numero;
     this.image = image;
   }
 }
@@ -30,6 +30,18 @@ const filterSelector = document.getElementById("filter-selector");
 const advancedContainer = document.getElementById("advOptionsContainer");
 
 /* FILTRADOS */
+
+function searchFilter(arr, search) {
+  return isNaN(search)
+    ? arr
+        .slice()
+        .filter((x) => x.nombre.toUpperCase().includes(search.toUpperCase()))
+    : arr.slice().filter((x) => x.numero.includes(search));
+}
+
+function randomSort(arr) {
+  return arr.slice().sort(() => 0.5 - Math.random());
+}
 
 function numberSort(arr) {
   return arr.slice().sort((a, b) => a.numero - b.numero);
@@ -72,7 +84,7 @@ function toggleHidden(element) {
 
 function cardMaker(pokemon) {
   let card = `<div
-  class="card col-2 border-light darkSecColor m-2"
+  class="card col-8 col-md-4 col-lg-2 border-light darkSecColor m-2"
 >
   <img
     src="${pokemon.image}"
@@ -96,6 +108,8 @@ let clear = () => (cardContainer.innerHTML = "");
 
 /* EVENTS */
 
+window.onload = alphabeticSort(pokes).forEach((x) => cardMaker(x));
+
 btnAdvanced.addEventListener("click", (e) => {
   e.preventDefault();
   toggleHidden(advancedContainer);
@@ -109,83 +123,16 @@ btnFilter.addEventListener("click", (e) => {
   globalSort(filter, typeFilter(type, pokes)).forEach((x) => cardMaker(x));
 });
 
-/* ? */
+btnRandom.addEventListener("click", (e) => {
+  e.preventDefault();
+  clear();
+  randomSort(pokes).forEach((x) => cardMaker(x));
+});
 
-if (login()) {
-  let userChoice = prompt(
-    "Elegí una opción: \n1 - Ver Iniciales. \n2 - Ordernar por Numero. \n3 - Filtrar por tipo \n4 - A-Z \n5 - Z-A \n6 - Salir"
-  );
+searchBar.addEventListener("keyup", () => {
+  const value = searchBar.value;
+  clear();
 
-  /* MENU DE OPCIONES */
-
-  while (userChoice != "6") {
-    switch (userChoice) {
-      /* MOSTRAR LOS INICIALES */
-      case "1":
-        alert(`Los iniciales disponibles son: \n ${crearString(iniciales)}`);
-
-        break;
-      /* ORDENAR POR NUMERO */
-      case "2":
-        alert(
-          crearString(iniciales.slice(0).sort((a, b) => a.numero - b.numero))
-        );
-        break;
-      /* FILTRAR POR TIPO */
-      case "3":
-        let userTypeChoice = prompt(
-          "Elegí entre Fuego, Agua o Planta"
-        ).toUpperCase();
-        let filtrado = crearString(
-          iniciales
-            .slice(0)
-            .filter((element) => element.tipo.toUpperCase() == userTypeChoice)
-        );
-        if (filtrado == "") {
-          alert("No hay iniciales con ese tipo");
-        } else {
-          alert(filtrado);
-        }
-
-        break;
-      /* ORDENAR A-Z */
-      case "4":
-        alert(
-          crearString(
-            iniciales.slice(0).sort((a, b) => a.nombre.localeCompare(b.nombre))
-          )
-        );
-        break;
-      /* ORDENAR Z-A */
-      case "5":
-        alert(
-          crearString(
-            iniciales
-              .slice(0)
-              .sort((a, b) => a.nombre.localeCompare(b.nombre))
-              .reverse()
-          )
-        );
-        break;
-
-      default:
-        alert("Elegiste una opción inválida");
-        break;
-    }
-    userChoice = prompt(
-      "Elegí una opción: \n1 - Ver Iniciales. \n2 - Ordernar por Numero. \n3 - Filtrar por tipo \n4 - A-Z \n5 - Z-A \n6 - Salir"
-    );
-  }
-} else {
-  alert("Fallaste varias veces seguidas, probá de nuevo mas tarde");
-}
-
-/* FUNC PARA CONVERTIR OBJETOS EN STRINGS */
-
-function crearString(array) {
-  string = "";
-  array.forEach((element) => {
-    string += `Nombre: ${element.nombre}\n Tipo: ${element.tipo}\n Numero: ${element.numero}\n Region: ${element.region} \n\n`;
-  });
-  return string;
-}
+  searchFilter(pokes, value).forEach((x) => cardMaker(x));
+  console.log(pokes.slice().filter((x) => x.numero.includes(parseInt(value))));
+});
