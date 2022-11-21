@@ -8,16 +8,50 @@ footer {
 .navbar {
   background-color: #343434 !important; }
 
+/* LIGHT MODE */
+.lightMode {
+  background-color: #f9f9f9; }
+  .lightMode .navbar-brand,
+  .lightMode footer {
+    color: #f9f9f9 !important; }
+  .lightMode main,
+  .lightMode #search-button {
+    color: #000; }
+    .lightMode main button,
+    .lightMode main input,
+    .lightMode #search-button button,
+    .lightMode #search-button input {
+      border-color: #000; }
+      .lightMode main button.btn-outline-light:hover,
+      .lightMode main input.btn-outline-light:hover,
+      .lightMode #search-button button.btn-outline-light:hover,
+      .lightMode #search-button input.btn-outline-light:hover {
+        border-color: #000; }
+      .lightMode main button#search-bar,
+      .lightMode main input#search-bar,
+      .lightMode #search-button button#search-bar,
+      .lightMode #search-button input#search-bar {
+        background-color: #f9f9f9; }
+  .lightMode .card,
+  .lightMode .card > img {
+    background-color: #f1f1f1 !important;
+    color: #000;
+    border-color: #30a7d7 !important; }
+
 /* TEXTOS */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-strong,
-.whiteTxt {
+/* body:not(.lightMode) > h1,
+body:not(.lightMode) > h2,
+body:not(.lightMode) > h3,
+body:not(.lightMode) > h4,
+body:not(.lightMode) > h5,
+body:not(.lightMode) > h6,
+body:not(.lightMode) > p,
+body:not(.lightMode) > strong,
+body:not(.lightMode) > .whiteTxt {
+  color: map-get($colors, whiteColor) !important;
+} */
+body,
+.navbar-brand {
   color: #ffffff !important; }
 
 /* CLASES ESPECIFICAS */

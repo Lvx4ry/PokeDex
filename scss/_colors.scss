@@ -12,17 +12,51 @@ footer {
   background-color: map-get($colors, darkSecColor) !important;
 }
 
-/* TEXTOS */
+/* LIGHT MODE */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-strong,
-.whiteTxt {
+.lightMode {
+  background-color: map-get($alternativeColors, whiteColor);
+  .navbar-brand,
+  footer {
+    color: map-get($alternativeColors, whiteColor) !important;
+  }
+  main,
+  #search-button {
+    color: map-get($alternativeColors, darkColor);
+    button,
+    input {
+      border-color: map-get($alternativeColors, darkColor);
+      &.btn-outline-light:hover {
+        border-color: map-get($alternativeColors, darkColor);
+      }
+      &#search-bar {
+        background-color: map-get($alternativeColors, whiteColor);
+      }
+    }
+  }
+  .card,
+  .card > img {
+    background-color: map-get($alternativeColors, greyColor) !important;
+    color: map-get($alternativeColors, darkColor);
+    border-color: map-get($alternativeColors, blueColor) !important;
+  }
+}
+
+/* TEXTOS */
+/* body:not(.lightMode) > h1,
+body:not(.lightMode) > h2,
+body:not(.lightMode) > h3,
+body:not(.lightMode) > h4,
+body:not(.lightMode) > h5,
+body:not(.lightMode) > h6,
+body:not(.lightMode) > p,
+body:not(.lightMode) > strong,
+body:not(.lightMode) > .whiteTxt {
+  color: map-get($colors, whiteColor) !important;
+} */
+
+body,
+.navbar-brand {
   color: map-get($colors, whiteColor) !important;
 }
 

@@ -28,6 +28,8 @@ const cardContainer = document.getElementById("cards-container");
 const typeSelector = document.getElementById("type-selector");
 const filterSelector = document.getElementById("filter-selector");
 const advancedContainer = document.getElementById("advOptionsContainer");
+const body = document.body;
+const btnDarkMode = document.getElementById("dark-mode-switch");
 
 /* FILTRADOS */
 
@@ -110,6 +112,14 @@ let clear = () => (cardContainer.innerHTML = "");
 
 window.onload = alphabeticSort(pokes).forEach((x) => cardMaker(x));
 
+btnDarkMode.addEventListener("click", () => {
+  body.classList.toggle("lightMode");
+  console.log(btnDarkMode.checked);
+  body.classList.contains("lightMode")
+    ? localStorage.setItem("dark-mode", "false")
+    : localStorage.setItem("dark-mode", "true");
+});
+
 btnAdvanced.addEventListener("click", (e) => {
   e.preventDefault();
   toggleHidden(advancedContainer);
@@ -136,3 +146,14 @@ searchBar.addEventListener("keyup", () => {
   searchFilter(pokes, value).forEach((x) => cardMaker(x));
   console.log(pokes.slice().filter((x) => x.numero.includes(parseInt(value))));
 });
+
+/* DARK MODE LOCAL STORAGE */
+
+if (JSON.parse(localStorage.getItem("dark-mode")) === true) {
+  body.classList.remove("lightMode");
+  btnDarkMode.checked = true;
+} else {
+  body.classList.add("lightMode");
+}
+
+console.log(JSON.parse(localStorage.getItem("dark-mode")));
