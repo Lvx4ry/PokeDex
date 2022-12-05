@@ -1,8 +1,19 @@
-let pokes = [];
+/* SELECTORS */
+const btnRandom = document.getElementById("random-button");
+const btnAdvanced = document.getElementById("advanced-button");
+const btnSearch = document.getElementById("search-button");
+const btnFilter = document.getElementById("filter-button");
+const searchBar = document.getElementById("search-bar");
+const cardContainer = document.getElementById("cards-container");
+const typeSelector = document.getElementById("type-selector");
+const filterSelector = document.getElementById("filter-selector");
+const advancedContainer = document.getElementById("advOptionsContainer");
+const body = document.body;
+const btnDarkMode = document.getElementById("dark-mode-switch");
 
-function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+//FETCH Y DECLARACION DE ARRAY DE POKES
+
+let pokes = [];
 
 const promesas = [];
 for (let i = 1; i < 152; i++) {
@@ -21,23 +32,6 @@ Promise.all(promesas).then((results) => {
   pokes = pokemons;
   cardMaker(pokemons);
 });
-
-/* SELECTORS */
-const btnRandom = document.getElementById("random-button");
-const btnAdvanced = document.getElementById("advanced-button");
-const btnSearch = document.getElementById("search-button");
-const btnFilter = document.getElementById("filter-button");
-const searchBar = document.getElementById("search-bar");
-const cardContainer = document.getElementById("cards-container");
-const typeSelector = document.getElementById("type-selector");
-const filterSelector = document.getElementById("filter-selector");
-const advancedContainer = document.getElementById("advOptionsContainer");
-const body = document.body;
-const btnDarkMode = document.getElementById("dark-mode-switch");
-
-function capitalCase(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 
 /* FILTRADOS */
 
@@ -82,6 +76,12 @@ function typeFilter(typeParam, arr) {
   }
 }
 
+//FUNCIONES VARIAS
+
+function capitalCase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /* TOGGLE VISIBLE */
 
 function toggleHidden(element) {
@@ -119,13 +119,8 @@ let clear = () => (cardContainer.innerHTML = "");
 
 /* EVENTS */
 
-window.onload = numberSort(pokes).forEach((x) => {
-  cardMaker(x);
-});
-
 btnDarkMode.addEventListener("click", () => {
   body.classList.toggle("lightMode");
-  console.log(btnDarkMode.checked);
   body.classList.contains("lightMode")
     ? localStorage.setItem("dark-mode", "false")
     : localStorage.setItem("dark-mode", "true");
@@ -167,5 +162,3 @@ if (JSON.parse(localStorage.getItem("dark-mode")) === true) {
 } else {
   body.classList.add("lightMode");
 }
-
-console.log(pokes);
