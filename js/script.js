@@ -3,7 +3,7 @@ let savedPass = 1234;
 
 /* CONSTRUCTOR Y DECLARACION DE POKES */
 
-class Pokemon {
+/* class Pokemon {
   constructor(nombre, tipo, numero, image) {
     this.nombre = nombre;
     this.tipo = tipo;
@@ -17,6 +17,46 @@ pokes = [
   new Pokemon("Squirtle", "Water", "7", "assets/img/squirtle.png"),
   new Pokemon("Bulbasaur", "Grass", "1", "assets/img/bulbasaur.png"),
 ];
+ */
+//FETCH POKES
+
+/* function fetchPokemon(filterType, value) {
+  switch (filterType) {
+    case "nameOrId":
+      fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+      break;
+    case "types":
+      fetch(`https://pokeapi.co/api/v2/type/${value}/`)
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+  }
+} */
+
+let promesas = [];
+let pokes = [];
+let pokemons = [];
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchPokemon() {
+  for (let i = 1; i < 152; i++) {
+    const url = `https://pokeapi.co/api/v2/pokemon/${i}/`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((poke) =>
+        pokemons.push({
+          name: poke.name,
+          id: poke.id,
+          img: poke.sprites.front_default,
+          type: poke.types.map((type) => type.type.name),
+        })
+      );
+  }
+}
 
 /* SELECTORS */
 const btnRandom = document.getElementById("random-button");
@@ -84,33 +124,40 @@ function toggleHidden(element) {
 
 /* CARDS */
 
-function cardMaker(pokemon) {
-  let card = `<div
+async function cardMaker(arr) {
+  await fetchPokemon();
+
+  arr.forEach((pokemon) => {
+    console.log(pokemon);
+    let card = `<div
   class="card col-8 col-md-4 col-lg-2 border-light darkSecColor m-2"
 >
   <img
-    src="${pokemon.image}"
-    alt="${pokemon.nombre}'s picture"
+    src="${pokemon.img}"
+    alt="${pokemon.name}'s picture"
     class="card-img-top border-bottom border-1 p-2"
   />
   <span
     class="card-subtitle text-muted whiteTxt mt-2 d-inline"
-    >#${pokemon.numero}</span
+    >#${pokemon.id}</span
   >
   <div class="card-body">
-    <h5 class="card-title col-12">${pokemon.nombre}</h5>
-    <p class="card-text col-12">${pokemon.tipo}</p>
+    <h5 class="card-title col-12">${pokemon.name}</h5>
+    <p class="card-text col-12">${pokemon.type}</p>
   </div>
 </div>`;
 
-  cardContainer.innerHTML += card;
+    cardContainer.innerHTML += card;
+  });
 }
 
 let clear = () => (cardContainer.innerHTML = "");
 
 /* EVENTS */
 
-window.onload = alphabeticSort(pokes).forEach((x) => cardMaker(x));
+window.onload = numberSort(pokemons).forEach((x) => {
+  cardMaker(x);
+});
 
 btnDarkMode.addEventListener("click", () => {
   body.classList.toggle("lightMode");
@@ -155,5 +202,7 @@ if (JSON.parse(localStorage.getItem("dark-mode")) === true) {
 } else {
   body.classList.add("lightMode");
 }
+fetchPokemon();
 
-console.log(JSON.parse(localStorage.getItem("dark-mode")));
+console.log(pokemons);
+cardMaker(pokemons);
