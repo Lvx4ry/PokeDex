@@ -1,62 +1,26 @@
-/* CONTRASEÑA? */
-let savedPass = 1234;
-
-/* CONSTRUCTOR Y DECLARACION DE POKES */
-
-/* class Pokemon {
-  constructor(nombre, tipo, numero, image) {
-    this.nombre = nombre;
-    this.tipo = tipo;
-    this.numero = numero;
-    this.image = image;
-  }
-}
-
-pokes = [
-  new Pokemon("Charmander", "Fire", "4", "assets/img/charmander.png"),
-  new Pokemon("Squirtle", "Water", "7", "assets/img/squirtle.png"),
-  new Pokemon("Bulbasaur", "Grass", "1", "assets/img/bulbasaur.png"),
-];
- */
-//FETCH POKES
-
-/* function fetchPokemon(filterType, value) {
-  switch (filterType) {
-    case "nameOrId":
-      fetch(`https://pokeapi.co/api/v2/pokemon/${value}/`)
-        .then((res) => res.json())
-        .then((data) => console.log(data));
-      break;
-    case "types":
-      fetch(`https://pokeapi.co/api/v2/type/${value}/`)
-        .then((res) => res.json())
-        .then((data) => console.log(data));
-  }
-} */
-
-let promesas = [];
 let pokes = [];
-let pokemons = [];
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchPokemon() {
-  for (let i = 1; i < 152; i++) {
-    const url = `https://pokeapi.co/api/v2/pokemon/${i}/`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((poke) =>
-        pokemons.push({
-          name: poke.name,
-          id: poke.id,
-          img: poke.sprites.front_default,
-          type: poke.types.map((type) => type.type.name),
-        })
-      );
-  }
+const promesas = [];
+for (let i = 1; i < 152; i++) {
+  const url = `https://pokeapi.co/api/v2/pokemon/${i}/`;
+  promesas.push(fetch(url).then((res) => res.json()));
 }
+
+Promise.all(promesas).then((results) => {
+  const pokemons = results.map((data) => ({
+    name: capitalCase(data.name),
+    id: data.id,
+    img: data.sprites.front_default,
+    type: data.types.map((type) => capitalCase(type.type.name)).join(" - "),
+  }));
+
+  pokes = pokemons;
+  cardMaker(pokemons);
+});
 
 /* SELECTORS */
 const btnRandom = document.getElementById("random-button");
@@ -71,14 +35,18 @@ const advancedContainer = document.getElementById("advOptionsContainer");
 const body = document.body;
 const btnDarkMode = document.getElementById("dark-mode-switch");
 
+function capitalCase(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /* FILTRADOS */
 
 function searchFilter(arr, search) {
   return isNaN(search)
     ? arr
         .slice()
-        .filter((x) => x.nombre.toUpperCase().includes(search.toUpperCase()))
-    : arr.slice().filter((x) => x.numero.includes(search));
+        .filter((x) => x.name.toUpperCase().includes(search.toUpperCase()))
+    : arr.slice().filter((x) => x.id.toString().includes(parseInt(search)));
 }
 
 function randomSort(arr) {
@@ -86,11 +54,11 @@ function randomSort(arr) {
 }
 
 function numberSort(arr) {
-  return arr.slice().sort((a, b) => a.numero - b.numero);
+  return arr.slice().sort((a, b) => a.id - b.id);
 }
 
 function alphabeticSort(arr) {
-  return arr.slice().sort((a, b) => a.nombre.localeCompare(b.nombre));
+  return arr.slice().sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function globalSort(value, arr) {
@@ -106,11 +74,9 @@ function globalSort(value, arr) {
   }
 }
 
-function typeFilter(type, arr) {
-  if (type !== "Every") {
-    return arr
-      .slice(0)
-      .filter((element) => element.tipo.toUpperCase() == type.toUpperCase());
+function typeFilter(typeParam, arr) {
+  if (typeParam !== "Every") {
+    return arr.slice(0).filter((x) => x.type.includes(typeParam));
   } else {
     return arr;
   }
@@ -124,13 +90,11 @@ function toggleHidden(element) {
 
 /* CARDS */
 
-async function cardMaker(arr) {
-  await fetchPokemon();
-
-  arr.forEach((pokemon) => {
-    console.log(pokemon);
-    let card = `<div
-  class="card col-8 col-md-4 col-lg-2 border-light darkSecColor m-2"
+const cardMaker = (arr) => {
+  const card = arr
+    .map(
+      (pokemon) => `<div
+  class="card col-8 col-md-4 col-lg-2 border-light darkSecColor my-3 mx-1"
 >
   <img
     src="${pokemon.img}"
@@ -145,17 +109,17 @@ async function cardMaker(arr) {
     <h5 class="card-title col-12">${pokemon.name}</h5>
     <p class="card-text col-12">${pokemon.type}</p>
   </div>
-</div>`;
-
-    cardContainer.innerHTML += card;
-  });
-}
+</div>`
+    )
+    .join("");
+  cardContainer.innerHTML += card;
+};
 
 let clear = () => (cardContainer.innerHTML = "");
 
 /* EVENTS */
 
-window.onload = numberSort(pokemons).forEach((x) => {
+window.onload = numberSort(pokes).forEach((x) => {
   cardMaker(x);
 });
 
@@ -177,21 +141,22 @@ btnFilter.addEventListener("click", (e) => {
   let type = typeSelector.value;
   let filter = filterSelector.value;
   clear();
-  globalSort(filter, typeFilter(type, pokes)).forEach((x) => cardMaker(x));
+  cardMaker(globalSort(filter, typeFilter(type, pokes)));
 });
 
 btnRandom.addEventListener("click", (e) => {
   e.preventDefault();
   clear();
-  randomSort(pokes).forEach((x) => cardMaker(x));
+  cardMaker(randomSort(pokes));
 });
 
 searchBar.addEventListener("keyup", () => {
   const value = searchBar.value;
   clear();
 
-  searchFilter(pokes, value).forEach((x) => cardMaker(x));
-  console.log(pokes.slice().filter((x) => x.numero.includes(parseInt(value))));
+  value == "" || value == " "
+    ? cardMaker(numberSort(pokes))
+    : cardMaker(searchFilter(pokes, value));
 });
 
 /* DARK MODE LOCAL STORAGE */
@@ -202,7 +167,5 @@ if (JSON.parse(localStorage.getItem("dark-mode")) === true) {
 } else {
   body.classList.add("lightMode");
 }
-fetchPokemon();
 
-console.log(pokemons);
-cardMaker(pokemons);
+console.log(pokes);
