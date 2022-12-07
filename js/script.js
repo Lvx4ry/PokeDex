@@ -10,8 +10,13 @@ const filterSelector = document.getElementById("filter-selector");
 const advancedContainer = document.getElementById("advOptionsContainer");
 const body = document.body;
 const btnDarkMode = document.getElementById("dark-mode-switch");
+const spinner = document.getElementById("loading-spinner");
 
 //FETCH Y DECLARACION DE ARRAY DE POKES
+
+let currentArray = [];
+let arrayPosition = 0;
+let arrPositionEnd = 15;
 
 let pokes = [];
 
@@ -30,7 +35,7 @@ Promise.all(promesas).then((results) => {
   }));
 
   pokes = pokemons;
-  cardMaker(pokemons);
+  printMore(pokes);
 });
 
 /* FILTRADOS */
@@ -78,6 +83,24 @@ function typeFilter(typeParam, arr) {
 
 //FUNCIONES VARIAS
 
+const clear = () => (cardContainer.innerHTML = "");
+
+const hideSpinner = () => spinner.classList.add("hidden");
+
+const clearPositionRestockSpinner = () => {
+  arrayPosition = 0;
+  arrPositionEnd = 15;
+  spinner.classList.remove("hidden");
+  clear();
+};
+
+function printMore(arr) {
+  currentArray = arr;
+  cardMaker(currentArray, arrayPosition);
+  arrayPosition += 15;
+  arrPositionEnd += 15;
+}
+
 function capitalCase(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -90,40 +113,74 @@ function toggleHidden(element) {
 
 /* CARDS */
 
-const cardMaker = (arr) => {
+const cardMaker = (arr, arrPosition) => {
+  //if (arrayPosition <= currentArray.length) {
   const card = arr
+    .slice(arrPosition, arrPositionEnd)
     .map(
       (pokemon) => `<div
-  class="card col-8 col-md-4 col-lg-2 border-light darkSecColor my-3 mx-1"
->
-  <img
-    src="${pokemon.img}"
-    alt="${pokemon.name}'s picture"
-    class="card-img-top border-bottom border-1 p-2"
-  />
-  <span
-    class="card-subtitle text-muted whiteTxt mt-2 d-inline"
-    >#${pokemon.id}</span
+    class="card col-8 col-md-4 col-lg-2 border-light darkSecColor my-3 mx-1"
   >
-  <div class="card-body">
-    <h5 class="card-title col-12">${pokemon.name}</h5>
-    <p class="card-text col-12">${pokemon.type}</p>
-  </div>
-</div>`
+    <img
+      src="${pokemon.img}"
+      alt="${pokemon.name}'s picture"
+      class="card-img-top border-bottom border-1 p-2"
+    />
+    <span
+      class="card-subtitle text-muted whiteTxt mt-2 d-inline"
+      >#${pokemon.id}</span
+    >
+    <div class="card-body">
+      <h5 class="card-title col-12">${pokemon.name}</h5>
+      <p class="card-text col-12">${pokemon.type}</p>
+    </div>
+  </div>`
     )
     .join("");
-  cardContainer.innerHTML += card;
+  if (arr.length < 1) {
+    cardContainer.innerHTML += `<div class="col-lg-8 col-10 fs-3 text-center">There's no results for what you're looking for :( <div/>`;
+    hideSpinner();
+  } else {
+    cardContainer.innerHTML += card;
+  }
 };
-
-let clear = () => (cardContainer.innerHTML = "");
+//};
 
 /* EVENTS */
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY + window.innerHeight >= document.body.offsetHeight - 5) {
+    setTimeout(() => {
+      printMore(currentArray);
+    }, 1000);
+  }
+  if (arrayPosition >= currentArray.length) {
+    hideSpinner();
+  }
+});
 
 btnDarkMode.addEventListener("click", () => {
   body.classList.toggle("lightMode");
   body.classList.contains("lightMode")
     ? localStorage.setItem("dark-mode", "false")
     : localStorage.setItem("dark-mode", "true");
+  Toastify({
+    text: "Theme Changed!",
+    duration: 2000,
+    offset: {
+      x: "0.2rem", // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+      y: "3.4em", // vertical axis - can be a number or a string indicating unity. eg: '2em'
+    },
+    destination: "https://github.com/apvarun/toastify-js",
+    newWindow: true,
+    close: true,
+    gravity: "top", // `top` or `bottom`
+    position: "right", // `left`, `center` or `right`
+    stopOnFocus: true, // Prevents dismissing of toast on hover
+    style: {
+      background: "linear-gradient(to right, #56ab2f, #a8e063)",
+    },
+  }).showToast();
 });
 
 btnAdvanced.addEventListener("click", (e) => {
@@ -135,23 +192,24 @@ btnFilter.addEventListener("click", (e) => {
   e.preventDefault();
   let type = typeSelector.value;
   let filter = filterSelector.value;
-  clear();
-  cardMaker(globalSort(filter, typeFilter(type, pokes)));
+
+  clearPositionRestockSpinner();
+  printMore(globalSort(filter, typeFilter(type, pokes)));
 });
 
 btnRandom.addEventListener("click", (e) => {
   e.preventDefault();
-  clear();
-  cardMaker(randomSort(pokes));
+  clearPositionRestockSpinner();
+  printMore(randomSort(pokes));
 });
 
 searchBar.addEventListener("keyup", () => {
   const value = searchBar.value;
-  clear();
+  clearPositionRestockSpinner();
 
   value == "" || value == " "
-    ? cardMaker(numberSort(pokes))
-    : cardMaker(searchFilter(pokes, value));
+    ? printMore(numberSort(pokes))
+    : printMore(searchFilter(pokes, value));
 });
 
 /* DARK MODE LOCAL STORAGE */
