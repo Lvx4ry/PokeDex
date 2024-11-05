@@ -83,3 +83,22 @@ footer {
 
 * {
   font-family: "Oswald", sans-serif; }
+
+.card-img-top {
+  min-width: 100%;
+  min-height: 60%; }
+
+.card {
+  min-height: 35vh; }
+
+@media all and (max-width: 960px) {
+  .card {
+    min-height: 20em; }
+  .card-img-top {
+    min-height: 60%; } }
+
+@media all and (min-width: 961px) and (max-width: 1367px) {
+  .card {
+    min-height: 19em; }
+  .card-img-top {
+    min-height: 60%; } }
