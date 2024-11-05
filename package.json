@@ -9,18 +9,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-css": "node-sass --include-path scss scss/style.scss css/style.css",
-    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "start": "react-scripts start"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lvx4ry/PokeDex.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lvx4ry",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Lvx4ry/PokeDex/issues"
   },
   "homepage": "https://github.com/Lvx4ry/PokeDex#readme",
-  "description": ""
+  "description": "Pokedex de la primera generación con 151 pokemon, hecha con JS vanilla"
 }

@@ -111,6 +111,15 @@ function toggleHidden(element) {
   element.classList.toggle("hidden");
 }
 
+function mostrarImagen(id) {
+  const img = document.getElementById(`img-${id}`);
+  const spinner = document.getElementById(`spinner-${id}`);
+
+  toggleHidden(img);
+  toggleHidden(spinner);
+
+}
+
 /* CARDS */
 
 const cardMaker = (arr, arrPosition) => {
@@ -119,13 +128,18 @@ const cardMaker = (arr, arrPosition) => {
     .slice(arrPosition, arrPositionEnd)
     .map(
       (pokemon) => `<div
-    class="card col-8 col-md-4 col-lg-2 border-light darkSecColor my-3 mx-1"
+    class="card col-8 col-md-4 col-lg-2 border-light darkSecColor my-3 mx-1 " "
   >
     <img
       src="${pokemon.img}"
       alt="${pokemon.name}'s picture"
-      class="card-img-top border-bottom border-1 p-2"
+      class="card-img-top border-bottom border-1 p-2 mt-2 hidden"
+      onload="mostrarImagen(${pokemon.id})"
+      id="img-${pokemon.id}"
     />
+    <div id="spinner-${pokemon.id}" class="card-img-top d-flex justify-content-center align-items-center border-bottom border-1 p-2 mt-2 align-self-center">
+    <div class="spinner-border p-2 mt-2" role="status"></div>
+    </div>
     <span
       class="card-subtitle text-muted whiteTxt mt-2 d-inline"
       >#${pokemon.id}</span
