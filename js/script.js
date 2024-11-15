@@ -111,12 +111,20 @@ function toggleHidden(element) {
   element.classList.toggle("hidden");
 }
 
+function hideElement(element){
+  element.classList.add("hidden");
+}
+
+function showElement(element){
+  element.classList.remove("hidden");
+}
+
 function mostrarImagen(id) {
   const img = document.getElementById(`img-${id}`);
   const spinner = document.getElementById(`spinner-${id}`);
 
-  toggleHidden(img);
-  toggleHidden(spinner);
+  showElement(img);
+  hideElement(spinner);
 
 }
 
